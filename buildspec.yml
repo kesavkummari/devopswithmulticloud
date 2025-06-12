@@ -1,0 +1,29 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+    commands:
+      - echo Installing Ansible...
+      - pip install ansible
+      - echo Installed Ansible version:
+      - ansible --version
+
+  pre_build:
+    commands:
+      - echo Pre-build phase: Checking files...
+      - ls -al
+
+  build:
+    commands:
+      - echo Running Ansible Playbook to install Apache2...
+      - ansible-playbook -i hosts.ini apache2-webserver.yml
+
+  post_build:
+    commands:
+      - echo Apache2 installation completed.
+
+artifacts:
+  files:
+    - "**/*"
