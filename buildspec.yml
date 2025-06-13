@@ -18,6 +18,7 @@ phases:
   build:
     commands:
       - echo Running Ansible Playbook to install Apache2...
+      - cd hashicorp-terraform
       - terraform init 
       - terraform plan
       - echo Applying Terraform configuration...
