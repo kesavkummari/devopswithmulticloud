@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    environment {
+        ANSIBLE_HOST_KEY_CHECKING = 'False'
+    }
+
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                sh '''
+                sudo apt-get update -y
+                sudo apt-get install -y python3-pip
+                pip3 install ansible
+                '''
+            }
+        }
+
+        stage('Run Ansible Playbook') {
+            steps {
+                sh '''
+                ansible-playbook -i hosts.ini apache2-webserver.yml
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Apache2 installed successfully using Ansible."
+        }
+        failure {
+            echo "Deployment failed."
+        }
+    }
+}
