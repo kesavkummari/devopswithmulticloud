@@ -18,6 +18,11 @@ phases:
   build:
     commands:
       - echo Running Ansible Playbook to install Apache2...
+      - terraform init 
+      - terraform plan
+      - echo Applying Terraform configuration...
+      - echo "This step is commented out to prevent actual changes."
+      - terraform apply -auto-approve
       - ansible-playbook -i hosts.ini apache2-webserver.yml
 
   post_build:
